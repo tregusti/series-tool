@@ -38,6 +38,7 @@ module.exports = function(grunt) {
       source: {
         src: [
           'lib/**/*.js',
+          'bin/**/*.js',
           'specs/**/*.js'
         ]
       }
