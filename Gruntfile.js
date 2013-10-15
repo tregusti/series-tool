@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       },
       source: {
         src: [
-          'lib/**/*.js',
+          'src/**/*.js',
           'bin/**/*.js',
           'specs/**/*.js'
         ]
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: [
-          'lib/**/*.js',
+          'src/**/*.js',
           'specs/**/*.js'
         ],
         tasks: ['jshint:source', 'mochaTest']

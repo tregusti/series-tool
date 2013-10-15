@@ -1,7 +1,7 @@
 child_process = require "child_process"
 
-cli = require "../../lib/cli"
-api = require "../../lib/api"
+cli = require "../../src/cli"
+api = require "../../src/api"
 
 describe "CLI argument parser with", ->
   beforeEach -> @sandbox = sinon.sandbox.create()

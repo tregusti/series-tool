@@ -1,4 +1,4 @@
-subtitle = require "../../lib/api/subtitle"
+subtitle = require "../../src/api/subtitle"
 
 describe "Subtitle API", ->
   baseurl = "http://subscene.com/subtitles"
