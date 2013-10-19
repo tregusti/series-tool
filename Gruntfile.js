@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         cyclomatic_complexity  : { level: 'error', value: 10 },
         indentation            : { level: 'error', value: 2 },
         line_endings           : { level: 'error', value: 'unix' },
-        max_line_length        : { level: 'error', value: 80 },
+        max_line_length        : { level: 'error', value: 100 },
         no_empty_param_list    : { level: 'error' },
       },
       specs: {
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         trailing      : true,
         undef         : true,
         maxcomplexity : 10,
-        maxlen        : 80,
+        maxlen        : 100,
         quotmark      : 'single',
         globals       : {}
         
