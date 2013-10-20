@@ -1,0 +1,4 @@
+Usage: series move <destination> <fileglob>...
+
+Options:
+  --help     Displays this help text.

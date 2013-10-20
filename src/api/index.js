@@ -1,3 +1,4 @@
 module.exports = {
-  subtitle: require('./subtitle')
+  subtitle : require('./subtitle'),
+  move     : require('./move')
 };
