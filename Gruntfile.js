@@ -51,6 +51,11 @@ module.exports = function(grunt) {
         src: 'specs/**/*.spec.coffee'
       }
     },
+    concurrent: {
+      'default' : ['jshint', 'coffeelint', 'mochaTest'],
+      'js'      : ['jshint', 'mochaTest'],
+      'coffee'  : ['coffeelint', 'mochaTest'],
+    },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -61,13 +66,13 @@ module.exports = function(grunt) {
           'src/**/*.js',
           'specs/**/*.js'
         ],
-        tasks: ['jshint:source', 'mochaTest']
+        tasks: ['concurrent:js']
       },
       coffee: {
         files: [
           'specs/**/*.coffee'
         ],
-        tasks: ['coffeelint:specs', 'mochaTest']
+        tasks: ['concurrent:coffee']
       }
     }
   });
@@ -77,8 +82,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-concurrent');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'coffeelint', 'mochaTest']);
+  grunt.registerTask('default', ['concurrent:dev']);
 
 };
