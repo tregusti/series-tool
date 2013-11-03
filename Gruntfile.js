@@ -85,6 +85,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
 
   // Default task.
-  grunt.registerTask('default', ['concurrent:dev']);
+  grunt.registerTask('default', ['concurrent:default']);
 
 };
