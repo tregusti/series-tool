@@ -8,6 +8,13 @@ function help() {
   process.exit(0);
 }
 
+function moveFile(dest, from) {
+  var name = path.basename(from);
+  var m = name.match(/^(.+?)\.S(\d+)E([\d-]+).*$/i);
+  var to = path.join(dest, m[1], 'Season ' + (+m[2]), name);
+  fs.renameSync(from, to);
+}
+
 module.exports = function(options) {
   if (options.help)
     return help();
@@ -21,9 +28,5 @@ module.exports = function(options) {
     throw new TypeError('Destination path does not exist');
   }
   
-  var from = options.files[0];
-  var name = path.basename(from);
-  var m = name.match(/^(.+?)\.S(\d+)E([\d-]+).*$/i);
-  var to = path.join(destination, m[1], 'Season ' + (+m[2]), name);
-  fs.renameSync(from, to);
+  options.files.forEach(moveFile.bind(null, destination));
 };

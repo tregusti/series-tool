@@ -59,12 +59,24 @@ describe "Move API", ->
   it "moves a Homeland episode as it should", ->
     fs.existsSync.returns true
     file = "/tmp/Homeland.S03E04.720p.HDTV.x264-2HD.mkv"
-    dest = "/dest"
     
     move
       files: [ file ]
-      destination: dest
+      destination: "/dest"
     
     to = "/dest/Homeland/Season 3/Homeland.S03E04.720p.HDTV.x264-2HD.mkv"
     fs.renameSync.should.have.been.calledOnce
     fs.renameSync.should.have.been.calledWithExactly file, to
+    
+  it "moves a bunch of Homeland episodes as it should", ->
+    fs.existsSync.returns true
+    files = ("/from/Homeland.S02E0#{i}.720p.HDTV.x264-2HD.mkv" for i in [1..4])
+    
+    move
+      files: files
+      destination: "/to"
+    
+    tos = ("/to/Homeland/Season 2/Homeland.S02E0#{i}.720p.HDTV.x264-2HD.mkv" for i in [1..4])
+    fs.renameSync.callCount.should.equal 4
+    fs.renameSync.should.have.been.calledWithExactly file, tos[i] for file, i in files
+    
