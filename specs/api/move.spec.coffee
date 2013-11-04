@@ -4,12 +4,20 @@ path = require "path"
 move = require "../../src/api/move"
 
 describe "Move API", ->
-  beforeEach -> @sandbox = sinon.sandbox.create()
-  afterEach  -> @sandbox.restore()
+  
+  options = null
+  
+  beforeEach ->
+    @sandbox = sinon.sandbox.create()
+    @sandbox.stub fs
+    options =
+      help: false
+  afterEach  ->
+    @sandbox.restore()
     
   context "help", ->
     beforeEach ->
-      @sandbox.stub fs, "readFileSync", -> "helptext"
+      fs.readFileSync.returns "helptext"
       @sandbox.stub process, "exit"
       @sandbox.stub console, "log"
       
@@ -29,3 +37,34 @@ describe "Move API", ->
       move help: true
       process.exit.should.have.been.calledOnce
       process.exit.should.have.been.calledWith 0
+  
+  
+  
+  context "destination path", ->
+    it "is required", ->
+      delete options.destination
+      f = -> move options
+      f.should.throw TypeError
+      f.should.throw /destination/i
+    
+    it "must be an existing path", ->
+      fs.existsSync.returns false
+      options.destination = "/etc/glubb"
+      f = -> move options
+      f.should.throw TypeError
+      f.should.throw /destination/i
+      
+  
+  
+  it "moves a Homeland episode as it should", ->
+    fs.existsSync.returns true
+    file = "/tmp/Homeland.S03E04.720p.HDTV.x264-2HD.mkv"
+    dest = "/dest"
+    
+    move
+      files: [ file ]
+      destination: dest
+    
+    to = "/dest/Homeland/Season 3/Homeland.S03E04.720p.HDTV.x264-2HD.mkv"
+    fs.renameSync.should.have.been.calledOnce
+    fs.renameSync.should.have.been.calledWithExactly file, to
