@@ -1,10 +1,10 @@
 var path = require('path');
 
 exports.parse = function(filepath) {
-  var out = {};
   var file = path.basename(filepath);
   var m   = file.match(/^(.*?)\.S(\d\d)E(\d\d)(?:-(\d\d))?/);
   if (m) {
+    var out = {};
     out.show    = m[1].replace(/\./g, ' ').replace(/`/g, '');
     out.season  = +m[2];
     out.episode = {
@@ -13,6 +13,7 @@ exports.parse = function(filepath) {
     };
     out.file = file;
     out.path = filepath;
+    return out;
   }
-  return out;
+  return null;
 };

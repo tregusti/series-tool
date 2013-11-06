@@ -1,5 +1,7 @@
 var util = require('util');
 
+var parser = require('./parser');
+
 var baseurl = 'http://subscene.com/subtitles';
 var SEASONS = (' first second third fourth fifth sixth' +
                ' seventh eighth ninth tenth').split(' ');
@@ -7,16 +9,15 @@ var SEASONS = (' first second third fourth fifth sixth' +
 function normalizeName(name) {
   return name
     .toLowerCase()
-    .replace(/\./g, '-');
+    .replace(/ +/g, '-');
 }
 
 module.exports = function( input ) {
-  var m = input && input.match(/^(.+?)\.S(\d+)E([\d-]+).*$/i);
-  if (m) {
-    var name   = normalizeName(m[1]);
-    var season = SEASONS[+m[2]];
+  var info = parser.parse(input);
+  if (info) {
+    var name   = normalizeName(info.show);
+    var season = SEASONS[info.season];
     return util.format('%s/%s-%s-season', baseurl, name, season);
   }
-  
   return null;
 };

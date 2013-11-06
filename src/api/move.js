@@ -1,6 +1,8 @@
 var fs = require('fs');
 var path = require('path');
 
+var parser = require('./parser');
+
 function help() {
   var file = path.join(__dirname, 'help', 'move.txt');
   var text = fs.readFileSync(file, 'utf-8');
@@ -9,10 +11,8 @@ function help() {
 }
 
 function moveFile(dest, from) {
-  var name = path.basename(from);
-  var m = name.match(/^(.+?)\.S(\d+)E([\d-]+).*$/i);
-  var show = m[1].replace(/\./g, ' ');
-  var to = path.join(dest, show, 'Season ' + (+m[2]), name);
+  var info = parser.parse(from);
+  var to = path.join(dest, info.show, 'Season ' + info.season, info.file);
   fs.renameSync(from, to);
 }
 

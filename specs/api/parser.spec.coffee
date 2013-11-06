@@ -33,4 +33,5 @@ describe "File parsing", ->
     result = subject.parse "/path/to/Sons.of.Anarchy.S04E09-10.HDTV-EVOLVE.mkv"
     result.should.have.property "path", "/path/to/Sons.of.Anarchy.S04E09-10.HDTV-EVOLVE.mkv"
     
-  
+  it "returns null if parsing is not successful", ->
+    should.not.exist subject.parse "/path/to/Bad.name.mkv"
