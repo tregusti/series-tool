@@ -68,15 +68,21 @@ describe "Move API", ->
     fs.renameSync.should.have.been.calledOnce
     fs.renameSync.should.have.been.calledWithExactly file, to
     
-  it "moves a bunch of Homeland episodes as it should", ->
+  it "moves a bunch of episodes from different shows as it should", ->
     fs.existsSync.returns true
-    files = ("/from/Homeland.S02E0#{i}.720p.HDTV.x264-2HD.mkv" for i in [1..4])
+    files = [
+      "/from/Homeland.S02E03.720p.HDTV.x264-2HD.mkv",
+      "/from/dl/hepp/Sons.of.Anarchy.S06E01.REPACK.720p.HDTV.x264-EVOLVE.mkv"
+    ]
     
     move
       files: files
       destination: "/to"
     
-    tos = ("/to/Homeland/Season 2/Homeland.S02E0#{i}.720p.HDTV.x264-2HD.mkv" for i in [1..4])
-    fs.renameSync.callCount.should.equal 4
+    tos = [
+      "/to/Homeland/Season 2/Homeland.S02E03.720p.HDTV.x264-2HD.mkv",
+      "/to/Sons of Anarchy/Season 6/Sons.of.Anarchy.S06E01.REPACK.720p.HDTV.x264-EVOLVE.mkv"
+    ]
+    fs.renameSync.callCount.should.equal 2
     fs.renameSync.should.have.been.calledWithExactly file, tos[i] for file, i in files
     

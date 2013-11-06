@@ -11,7 +11,8 @@ function help() {
 function moveFile(dest, from) {
   var name = path.basename(from);
   var m = name.match(/^(.+?)\.S(\d+)E([\d-]+).*$/i);
-  var to = path.join(dest, m[1], 'Season ' + (+m[2]), name);
+  var show = m[1].replace(/\./g, ' ');
+  var to = path.join(dest, show, 'Season ' + (+m[2]), name);
   fs.renameSync(from, to);
 }
 
