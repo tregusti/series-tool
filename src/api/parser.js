@@ -2,7 +2,7 @@ var path = require('path');
 
 exports.parse = function(filepath) {
   var file = path.basename(filepath);
-  var m   = file.match(/^(.*?)\.S(\d\d)E(\d\d)(?:-(\d\d))?/);
+  var m   = file.match(/^(.*?)\.S(\d\d)E(\d\d)(?:-(\d\d))?/i);
   if (m) {
     var out = {};
     out.show    = m[1].replace(/\./g, ' ').replace(/`/g, '');

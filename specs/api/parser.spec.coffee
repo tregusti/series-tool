@@ -35,3 +35,10 @@ describe "File parsing", ->
     
   it "returns null if parsing is not successful", ->
     should.not.exist subject.parse "/path/to/Bad.name.mkv"
+  
+  it "handles mixed casing in season and episode", ->
+    result = subject.parse "/path/to/Sons.of.Anarchy.s03e07.HDTV-EVOLVE.mkv"
+    result.should.have.property "season", 3
+    result.episode.should.have.property "from", 7
+    result.episode.should.have.property "to", 7
+    
