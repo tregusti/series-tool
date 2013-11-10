@@ -1,6 +1,6 @@
 {
   "name": "series-tool",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "devDependencies": {
     "mocha": "~1.13.0",

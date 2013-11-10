@@ -21,6 +21,11 @@ var cli = {
 * @see http://michaelbrooks.ca/deck/jsconf2013/
 */
 exports.run = function( argv ) {
+  if (argv.version) {
+    var data = require(path.join(__dirname, '..', '..', 'package.json'));
+    console.log(data.version);
+    return;
+  }
   if (argv._[0] === 'subtitle') {
     cli.subtitle( argv );
   }
