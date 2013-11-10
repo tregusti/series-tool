@@ -1,5 +1,6 @@
 fs   = require "fs"
 path = require "path"
+mkdirp = require "mkdirp"
 
 move = require "../../src/api/move"
 
@@ -10,6 +11,7 @@ describe "Move API", ->
   beforeEach ->
     @sandbox = sinon.sandbox.create()
     @sandbox.stub fs
+    @sandbox.stub mkdirp, "sync"
     options =
       help: false
   afterEach  ->
@@ -100,19 +102,19 @@ describe "Move API", ->
       files: [file]
       destination: "/to"
     
-    fs.mkdirSync.should.have.been.calledWithExactly "/to/Show"
-  
-  
-  it "should not create series directory if it exists", ->
+    mkdirp.sync.should.have.been.calledWithExactly "/to/Show/Season 1"
+
+
+  it "creates the season directory if needed", ->
     fs.existsSync.withArgs("/to").returns true
-    fs.readdirSync.withArgs("/to").returns ["show"]
+    fs.readdirSync.withArgs("/to").returns ["Show"]
     file = "/Show.S01E01.mkv"
     
     move
       files: [file]
       destination: "/to"
     
-    fs.mkdirSync.should.not.have.been.called
+    mkdirp.sync.should.have.been.calledWithExactly "/to/Show/Season 1"  
   
   
   it "reuses existing directories even if casing differs", ->

@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var mkdirp = require('mkdirp');
 
 var parser = require('./parser');
 
@@ -20,11 +21,11 @@ function moveFile(dest, from) {
       show = path.basename(dir);
     }
   });
-  if (create) {
-    fs.mkdirSync(path.join(dest, show));
-  }
   
-  var to = path.join(dest, show, 'Season ' + info.season, info.file);
+  var topath = path.join(dest, show, 'Season ' + info.season);
+  var to = path.join(topath, info.file);
+  mkdirp.sync(topath);
+  
   fs.renameSync(from, to);
   // console.dir(["move", from, to]);
 }
