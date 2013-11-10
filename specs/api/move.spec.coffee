@@ -56,8 +56,10 @@ describe "Move API", ->
       
   
   
+  
   it "moves a Homeland episode as it should", ->
     fs.existsSync.returns true
+    fs.readdirSync.withArgs("/dest").returns ["Homeland"]
     file = "/tmp/Homeland.S03E04.720p.HDTV.x264-2HD.mkv"
     
     move
@@ -68,8 +70,10 @@ describe "Move API", ->
     fs.renameSync.should.have.been.calledOnce
     fs.renameSync.should.have.been.calledWithExactly file, to
     
+  
   it "moves a bunch of episodes from different shows as it should", ->
     fs.existsSync.returns true
+    fs.readdirSync.withArgs("/to").returns ["Homeland"]
     files = [
       "/from/Homeland.S02E03.720p.HDTV.x264-2HD.mkv",
       "/from/dl/hepp/Sons.of.Anarchy.S06E01.REPACK.720p.HDTV.x264-EVOLVE.mkv"
@@ -85,4 +89,42 @@ describe "Move API", ->
     ]
     fs.renameSync.callCount.should.equal 2
     fs.renameSync.should.have.been.calledWithExactly file, tos[i] for file, i in files
+  
+  
+  it "should create series directory if needed", ->
+    fs.existsSync.withArgs("/to").returns true
+    fs.readdirSync.withArgs("/to").returns []
+    file = "/Show.S01E01.mkv"
     
+    move
+      files: [file]
+      destination: "/to"
+    
+    fs.mkdirSync.should.have.been.calledWithExactly "/to/Show"
+  
+  
+  it "should not create series directory if it exists", ->
+    fs.existsSync.withArgs("/to").returns true
+    fs.readdirSync.withArgs("/to").returns ["show"]
+    file = "/Show.S01E01.mkv"
+    
+    move
+      files: [file]
+      destination: "/to"
+    
+    fs.mkdirSync.should.not.have.been.called
+  
+  
+  it "reuses existing directories even if casing differs", ->
+    fs.existsSync.withArgs("/to").returns true
+    fs.readdirSync.withArgs("/to").returns ["Sons of Anarchy"]
+    file = "/tmp/sons.OF.anarChy.S01E01.mkv"
+    
+    move
+      files: [file]
+      destination: "/to"
+    
+    expected = "/to/Sons of Anarchy/Season 1/sons.OF.anarChy.S01E01.mkv"
+    fs.renameSync.should.have.been.calledWithExactly file, expected
+
+  

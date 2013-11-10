@@ -12,8 +12,21 @@ function help() {
 
 function moveFile(dest, from) {
   var info = parser.parse(from);
-  var to = path.join(dest, info.show, 'Season ' + info.season, info.file);
+  var show = info.show;
+  var create = true;
+  fs.readdirSync(dest).forEach(function(dir) {
+    if (path.basename(dir).toLowerCase() === show.toLowerCase()) {
+      create = false;
+      show = path.basename(dir);
+    }
+  });
+  if (create) {
+    fs.mkdirSync(path.join(dest, show));
+  }
+  
+  var to = path.join(dest, show, 'Season ' + info.season, info.file);
   fs.renameSync(from, to);
+  // console.dir(["move", from, to]);
 }
 
 module.exports = function(options) {

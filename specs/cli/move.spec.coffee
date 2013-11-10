@@ -22,7 +22,7 @@ describe "CLI move", ->
   
   context "with valid params", ->
     beforeEach ->
-      @args = 
+      @args =
         _           : [ "move", "/path/filename.mkv" ],
         destination : "/some/path"
       
