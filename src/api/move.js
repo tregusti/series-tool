@@ -14,10 +14,8 @@ function help() {
 function moveFile(dest, from) {
   var info = parser.parse(from);
   var show = info.show;
-  var create = true;
   fs.readdirSync(dest).forEach(function(dir) {
     if (path.basename(dir).toLowerCase() === show.toLowerCase()) {
-      create = false;
       show = path.basename(dir);
     }
   });
