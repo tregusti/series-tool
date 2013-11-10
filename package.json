@@ -10,7 +10,6 @@
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-coffeelint": "0.0.7",
-    "grunt-concurrent": "~0.4.1",
     "sinon-chai": "~2.4.0",
     "sinon": "~1.7.3"
   },
@@ -23,6 +22,7 @@
   "author": "Glenn Jorde <glenn@tregusti.com>",
   "license": "MIT",
   "dependencies": {
-    "optimist": "~0.6.0"
+    "optimist": "~0.6.0",
+    "mkdirp": "~0.3.5"
   }
 }
