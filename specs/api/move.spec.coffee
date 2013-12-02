@@ -114,7 +114,7 @@ describe "Move API", ->
       files: [file]
       destination: "/to"
     
-    mkdirp.sync.should.have.been.calledWithExactly "/to/Show/Season 1"  
+    mkdirp.sync.should.have.been.calledWithExactly "/to/Show/Season 1"
   
   
   it "reuses existing directories even if casing differs", ->
