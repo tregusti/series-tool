@@ -41,4 +41,8 @@ describe "File parsing", ->
     result.should.have.property "season", 3
     result.episode.should.have.property "from", 7
     result.episode.should.have.property "to", 7
-    
+
+  context "with exceptions", ->
+    it "handles The Newsroom", ->
+      result = subject.parse "/path/to/The.Newsroom.2012.S01E01.HDTV-EVOLVE.mkv"
+      result.should.have.property "show", "The Newsroom (2012)"
