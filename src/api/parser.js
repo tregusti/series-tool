@@ -6,7 +6,7 @@ exports.parse = function(filepath) {
   if (m) {
     var info     = {};
     info.show    = m[1].replace(/\./g, ' ').replace(/`/g, '');
-    info.year    = m[2] ? +m[2] : null
+    info.year    = m[2] ? +m[2] : null;
     info.season  = +m[3];
     info.episode = {
       from : +m[4],

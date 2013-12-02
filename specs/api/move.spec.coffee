@@ -130,3 +130,16 @@ describe "Move API", ->
     fs.renameSync.should.have.been.calledWithExactly file, expected
 
   
+  it "moves adds the year in parentheses", ->
+    fs.existsSync.withArgs("/to").returns true
+    fs.readdirSync.withArgs("/to").returns ["The Newsroom (2012)"]
+    file = "/tmp/The.Newsroom.2012.S01E01.mkv"
+    
+    move
+      files: [file]
+      destination: "/to"
+    
+    expected = "/to/The Newsroom (2012)/Season 1/The.Newsroom.2012.S01E01.mkv"
+    fs.renameSync.should.have.been.calledWithExactly file, expected
+    
+    
