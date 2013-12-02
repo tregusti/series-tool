@@ -32,4 +32,13 @@ describe "Subtitle API", ->
       result = subtitle "Homeland.S02E05.720p.HDTV.x264-IMMERSE.mkv"
       expected = baseurl + "/homeland-second-season"
       (expect result).to.equal expected
+    
+    it "handles archer series as an exception", ->
+      file = "Archer.2009.S01E01.720p.HDTV.x264-IMMERSE.mkv"
+      result = subtitle file
+      (expect result).to.not.contain "-2009-"
       
+    it "handles the newsroom series as an exception", ->
+      file = "The.Newsroom.2012.S01E01.mkv"
+      result = subtitle file
+      (expect result).to.not.contain "-2012-"
