@@ -14,6 +14,10 @@ function help() {
 function moveFile(dest, from) {
   var info = parser.parse(from);
   var show = info.show;
+  if (info.year) {
+    show = show += ' (' + info.year + ')';
+  }
+  
   fs.readdirSync(dest).forEach(function(dir) {
     if (path.basename(dir).toLowerCase() === show.toLowerCase()) {
       show = path.basename(dir);
